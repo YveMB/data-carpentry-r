@@ -96,3 +96,12 @@ interviews$day<-day(dates) #function from the lubridate package
 interviews$month<-month(dates)
 interviews$year<-year(dates)
 str(interviews)
+
+#For using dplyr and tidyr
+interviews<-read_csv("data/SAFI_clean.csv", na="NULL")
+# select the three columns from the dataframe
+select(interviews, village, no_membrs, years_liv)
+#select the columns from village to rooms
+select(interviews, village:rooms)
+#filter 
+filter
