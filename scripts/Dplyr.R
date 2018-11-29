@@ -28,3 +28,17 @@ mean(interviews$no_membrs)
 interviews %>% group_by(village) %>%
   summarize(mean_no_membrs=mean(no_membrs))
 
+interviews %>% group_by(village) %>%
+  filter(memb_assoc=="yes") %>%
+  summarize(mean_no_membrs=mean(no_membrs))
+
+interviews %>% group_by(village, memb_assoc) %>%
+  summarize(mean_no_membrs=mean(no_membrs))
+
+interviews %>% group_by(village, memb_assoc) %>%
+  summarize(mean_no_membrs=mean(no_membrs),
+            min_members=min(no_membrs))
+
+
+
+
