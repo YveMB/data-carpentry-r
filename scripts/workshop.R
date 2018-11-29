@@ -103,5 +103,5 @@ interviews<-read_csv("data/SAFI_clean.csv", na="NULL")
 select(interviews, village, no_membrs, years_liv)
 #select the columns from village to rooms
 select(interviews, village:rooms)
-#filter 
-filter
+#filtering 
+filter(interviews, village =="God")
