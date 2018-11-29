@@ -39,6 +39,14 @@ interviews %>% group_by(village, memb_assoc) %>%
   summarize(mean_no_membrs=mean(no_membrs),
             min_members=min(no_membrs))
 
+#Count
+interviews %>% count(village)
+interviews %>% count(village, sort=TRUE) #will arrange from highest to lowest
 
+#Use group_by() and summarize() to find the mean, min, and max number of household members for each village. Also add the number of observations (hint: see ?n).
+interviews %>% group_by(village) %>%
+  summarize(mean_no_membrs=mean(no_membrs),
+            min_members=min(no_membrs),
+            max_members=max(no_membrs), n=n())
 
 
