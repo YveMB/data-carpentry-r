@@ -5,6 +5,15 @@
 
 library(tidyverse)
 interviews<-read_csv("data/SAFI_clean.csv", na="NULL")
+
+#if base R then use
+interviews<-read.csv("data/SAFI_clean.csv", na="NULL", stringsAsFactors = FALSE)
+
+#if base R can also use options 
+options(stringsAsFactors = FALSE)
+interviews<-read.csv("data/SAFI_clean.csv", na="NULL")
+
+
 interviews
 as.data.frame(interviews)
 View(interviews)
@@ -34,3 +43,56 @@ interviews_middle<-interviews[ceiling(nrow(interviews)/2),] # round up to 66
 
 interviews[-(7:nrow(interviews)),] # will just give the first six rows
 
+###Factors 
+respondent_floor_type<-factor(c("earth", "cement", "cement", "earth"))
+
+#gives two levels cement and earth
+nlevels(respondent_floor_type)
+
+# Order the levels
+respondent_floor_type <-factor(respondent_floor_type, levels=c("earth", "cement"))
+#change levels cement to brick
+levels(respondent_floor_type)[2]<-"brick"
+respondent_floor_type  
+
+#convert back to character vector
+as.character(respondent_floor_type)
+
+#create a factor of years
+year_fct <- factor(c(1990, 1983, 1977, 1998, 1990))
+year_fct
+as.numeric(year_fct) #doesnt work
+as.numeric(as.character(year_fct)) # converts them back to actual year
+
+as.numeric(levels(year_fct))[year_fct] #converts them back to actual year R recommended
+
+affect_conflict<-interviews$affect_conflicts # can also do <-interviews[["affect_conflicts"]]
+affect_conflict <-factor(affect_conflict)
+affect_conflict
+plot(affect_conflict) #because it is a factor you can plot it
+
+affect_conflict<-interviews$affect_conflicts
+affect_conflict[is.na(affect_conflict)]<-"undetermined" # change NAs
+affect_conflict <-factor(affect_conflict) # then makes NA a level
+levels(affect_conflict)
+
+levels(affect_conflict)[2]<-"More than once"
+# can also do
+levels(affect_conflict)[levels(affect_conflict) =="more_once"]<-"More than once"
+
+levels(affect_conflict)
+affect_conflict <-factor(affect_conflict, levels=c("never", "once", 
+                                                   "More than once", "frequently", "undetermined"))
+plot(affect_conflict, ylim=c(0,50))
+box()
+
+str(interviews)
+#useful for dealing with dates "lubridate"
+library(lubridate)                        
+
+dates<-interviews$interview_date
+head(dates)
+interviews$day<-day(dates) #function from the lubridate package
+interviews$month<-month(dates)
+interviews$year<-year(dates)
+str(interviews)
