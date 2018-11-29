@@ -15,3 +15,16 @@ interviews_god<-interviews % > % filter(village=="God")% >%
 interviews_members <- interviews %>%
   filter(memb_assoc == "yes") %>%
   select(affect_conflicts, liv_count, no_meals)
+
+##Mutate - allows us to add new columns 
+interviews<- interviews % > % mutate (people_per_room = no_membrs/rooms)
+
+#compute average
+mean(interviews$no_membrs)
+
+#group_by is tidyverse way of specifying a variable that distinguishes between 
+#different groups.
+
+interviews %>% group_by(village) %>%
+  summarize(mean_no_membrs=mean(no_membrs))
+
